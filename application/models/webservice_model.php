@@ -80,65 +80,11 @@ class WebService_model extends CI_Model
 		}
 	}
 
-	function getQpsCategoryList()
-	{
-		// $this->db->select($select ='');
-		$this->db->select('id, parent_id,level,path,title,published');
-		$this->db->where('parent_id','92');
-		$query = $this->db->get('qamp5_categories');
-
-		if($query->num_rows())
-		{
-			return $query->result_array();
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
-	function getQpsAnnouncementList()
-	{
-		// Announcements, category_id = 107
-		$this->db->select('qamp5_content.id, qamp5_content.title, qamp5_content.introtext, qamp5_content.created, qamp5_users.name');
-		$this->db->from('qamp5_content');
-		$this->db->join('qamp5_users', 'qamp5_users.id = qamp5_content.created_by', 'left');
-		$this->db->where('qamp5_content.catid','107');
-		$query = $this->db->get();
-
-		if($query->num_rows())
-		{
-			return $query->result_array();
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
-	function getQpsNewsList()
-	{
-		// News, category_id = 330
-		$this->db->select('qamp5_content.id, qamp5_content.title, qamp5_content.introtext, qamp5_content.created, qamp5_users.name');
-		$this->db->from('qamp5_content');
-		$this->db->join('qamp5_users', 'qamp5_users.id = qamp5_content.created_by', 'left');
-		$this->db->where('qamp5_content.catid','107');
-		$query = $this->db->get();
-
-		if($query->num_rows())
-		{
-			return $query->result_array();
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
 	function getSubCategories($parent_id)
 	{
 		$this->db->select('id,parent_id,level,path,title,published');
 		$this->db->where('parent_id',$parent_id);
+		$this->db->where('published','1');
 		$query = $this->db->get('qamp5_categories');
 
 		if($query->num_rows())
@@ -151,13 +97,49 @@ class WebService_model extends CI_Model
 		}
 	}
 
-	function getArticle($catid)
+	function getArticles($catid)
 	{
 		$this->db->select('qamp5_content.id, qamp5_content.title, qamp5_content.introtext, qamp5_content.created, qamp5_users.name');
 		$this->db->from('qamp5_content');
 		$this->db->join('qamp5_users','$qamp5_users.id = qamp5_content.created_by','left');
+		$this->db->order_by("qamp5_content.created", "desc");
 		$this->db->where('qamp5_content.catid',$catid);
+		$this->db->where('state','1');
 		$query = $this->db->get(); 
+
+		if($query->num_rows())
+		{
+			return $query->result_array();
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	function getGalleryList($id)
+	{
+		$this->db->select('id,ordering,name,alias,profile,parent,date');
+		$this->db->where('parent',$id);
+		$this->db->where('published','1');
+		$query = $this->db->get('qamp5_igallery');
+
+		if($query->num_rows())
+		{
+			return $query->result_array();
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	function getImagesList($id)
+	{
+		$this->db->select('id,gallery_id,ordering,date,filename,description');
+		$this->db->where('gallery_id',$id);
+		$this->db->where('published','1');
+		$query = $this->db->get('qamp5_igallery_img');
 
 		if($query->num_rows())
 		{

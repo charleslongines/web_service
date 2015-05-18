@@ -1,7 +1,7 @@
 <?php
 class WebService_model extends CI_Model
 {
-	function createTableLogs($table)
+	function createTableLogs()
 	{
 		$this->db->query('CREATE TABLE `logs` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -15,6 +15,23 @@ class WebService_model extends CI_Model
 			  `authorized` tinyint(1) NOT NULL,
 			  `response_code` smallint(3) NOT NULL,
 			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+	}
+
+	function createTableDevices()
+	{
+		$this->db->query('CREATE TABLE `devices` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`app_name` varchar(255) NOT NULL,
+			`app_version` varchar(255) NOT NULL,
+			`device_token` varchar(255) NOT NULL UNIQUE,
+			`device_name` varchar(255) NOT NULL,
+			`device_model` varchar(255) NOT NULL,
+			`device_os` varchar(255) NOT NULL,
+			`device_version` varchar(255) NOT NULL,
+			`date_created` DATETIME DEFAULT NULL,
+			`date_updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 	}
 
@@ -149,6 +166,13 @@ class WebService_model extends CI_Model
 		{
 			return FALSE;
 		}
+	}
+
+	function registerDevice($data)
+	{
+		$this->db->set($data);
+		$this->db->insert('devices');
+		return $query = $this->db->insert_id();
 	}
 }
 ?>

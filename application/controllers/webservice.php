@@ -1,6 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH.'/libraries/REST_Controller.php';
-
 class WebService extends REST_Controller
 {
 	function __construct()
@@ -11,6 +10,13 @@ class WebService extends REST_Controller
 		{
         	$this->webservice_model->createTableLogs();
         }
+        if(!$this->db->table_exists('devices'))
+        {
+        	$this->webservice_model->createTableDevices();
+        }
+
+        $this->image_domain = 'src="http://qc-intranet-training.stluke.com.ph/';
+        $this->href_domain = 'href="http://qc-intranet-training.stluke.com.ph/';
 	}
 
 	function index_get()
@@ -77,11 +83,18 @@ class WebService extends REST_Controller
 	function qpsNews_get()
 	{
 		// catid: 330, path: qps/news
-		$content = $this->webservice_model->getArticles('330');
-		$category = $this->webservice_model->getCategory('330');
+		$content = $this->webservice_model->getArticles('624');
+		$category = $this->webservice_model->getCategory('624');
 
 		foreach($content as $key => $value)
 		{
+			if(strpos($value['introtext'], 'src="') || strpos($value['introtext'], 'href="'))
+			{
+				$value['introtext'] = str_replace('src="', $this->image_domain, $value['introtext']);
+				$value['introtext'] = str_replace('href="', $this->href_domain, $value['introtext']);
+			
+			}
+
 			$news[$key] = array('id' => $value['id'],
 								'title' => $value['title'],
 								'content' => $value['introtext'],
@@ -102,6 +115,13 @@ class WebService extends REST_Controller
 
 		foreach($content as $key => $value)
 		{
+			if(strpos($value['introtext'], 'src="') || strpos($value['introtext'], 'href="'))
+			{
+				$value['introtext'] = str_replace('src="', $this->image_domain, $value['introtext']);
+				$value['introtext'] = str_replace('href="', $this->href_domain, $value['introtext']);
+			
+			}
+
 			$announcement[$key] = array('id' => $value['id'],
 								'title' => $value['title'],
 								'content' => $value['introtext'],
@@ -127,6 +147,13 @@ class WebService extends REST_Controller
 
 		foreach($result as $key => $value)
 		{
+			if(strpos($value['introtext'], 'src="') || strpos($value['introtext'], 'href="'))
+			{
+				$value['introtext'] = str_replace('src="', $this->image_domain, $value['introtext']);
+				$value['introtext'] = str_replace('href="', $this->href_domain, $value['introtext']);
+			
+			}
+
 			$article[$key] =  array('id' => $value['id'],
 								'title' => $value['title'],
 								'content' => $value['introtext'],
@@ -138,13 +165,13 @@ class WebService extends REST_Controller
 		$this->response($data);
 	}
 
-	function qpsContactUs_get($id)
+	function qpsContactUs_get()
 	{
-		// For Contact's SubCategory cat_id = 335
+		// For Contact's SubCategory cat_id = 336
 		// $contact_us = $this->webservice_model->getSubCategories($id);
 
 		//Direct Contacts
-		$mobile = $this->qpsMobile_get($id);
+		$mobile = $this->qpsMobile_get('635');
 		$dr_dondi= array(array('title'=>'Dr. Dondi',
 					'email' => 'acdizon@stluke.com.ph',
 					'email_subject' => 'Dear Dr. Dondi',
@@ -167,6 +194,13 @@ class WebService extends REST_Controller
 
 		foreach($result as $key => $value)
 		{
+			if(strpos($value['introtext'], 'src="') || strpos($value['introtext'], 'href="'))
+			{
+				$value['introtext'] = str_replace('src="', $this->image_domain, $value['introtext']);
+				$value['introtext'] = str_replace('href="', $this->href_domain, $value['introtext']);
+			
+			}
+
 			$mobile[$key] =  array('id' => $value['id'],
 								'title' => $value['title'],
 								'content' => $value['introtext'],
@@ -179,14 +213,21 @@ class WebService extends REST_Controller
 		return $mobile;
 	}
 
-	function qpsDownloadableMaterials_get($id)
+	function qpsDownloadableMaterials_get()
 	{
 		// DOWNLOADABLE MATERIALS = 106
-		$result = $this->webservice_model->getArticles($id);
-		$category = $this->webservice_model->getCategory($id);
+		$result = $this->webservice_model->getArticles('106');
+		$category = $this->webservice_model->getCategory('106');
 
 		foreach($result as $key => $value)
 		{
+			if(strpos($value['introtext'], 'src="') || strpos($value['introtext'], 'href="'))
+			{
+				$value['introtext'] = str_replace('src="', $this->image_domain, $value['introtext']);
+				$value['introtext'] = str_replace('href="', $this->href_domain, $value['introtext']);
+			
+			}
+
 			$downloadable[$key] =  array('id' => $value['id'],
 								'title' => $value['title'],
 								'content' => $value['introtext'],
@@ -201,10 +242,17 @@ class WebService extends REST_Controller
 	function qpsTips_get()
 	{
 		// TIPS = 327
-		$content = $this->webservice_model->getArticles('327');
-		$category = $this->webservice_model->getCategory('327');
+		$content = $this->webservice_model->getArticles('373');
+		$category = $this->webservice_model->getCategory('373');
 		foreach($content as $key => $value)
 		{
+			if(strpos($value['introtext'], 'src="') || strpos($value['introtext'], 'href="'))
+			{
+				$value['introtext'] = str_replace('src="', $this->image_domain, $value['introtext']);
+				$value['introtext'] = str_replace('href="', $this->href_domain, $value['introtext']);
+			
+			}
+
 			$tips[$key] = array('id' => $value['id'],
 								'title' => $value['title'],
 								'content' => $value['introtext'],
@@ -220,10 +268,17 @@ class WebService extends REST_Controller
 	function qpsExperience_get()
 	{
 		// EXPERIENCE = 334
-		$content = $this->webservice_model->getArticles('334');
-		$category = $this->webservice_model->getCategory('334');
+		$content = $this->webservice_model->getArticles('632');
+		$category = $this->webservice_model->getCategory('632');
 		foreach($content as $key => $value)
 		{
+			if(strpos($value['introtext'], 'src="') || strpos($value['introtext'], 'href="'))
+			{
+				$value['introtext'] = str_replace('src="', $this->image_domain, $value['introtext']);
+				$value['introtext'] = str_replace('href="', $this->href_domain, $value['introtext']);
+			
+			}
+
 			$experience[$key] = array('id' => $value['id'],
 								'title' => $value['title'],
 								'content' => $value['introtext'],
@@ -236,10 +291,10 @@ class WebService extends REST_Controller
 		$this->response($data);
 	}
 
-	function qpsGalleryList_get($id)
+	function qpsGalleryList_get()
 	{
 		// QPS GALLERY/ALBUM LIST = 19
-		$gallery = $this->webservice_model->getGalleryList($id);
+		$gallery = $this->webservice_model->getGalleryList('19');
 
 		foreach($gallery as $key => $value)
 		{
@@ -264,7 +319,7 @@ class WebService extends REST_Controller
 
 	function getAlbumPath_get($image_id, $filename)
 	{
-		$original_path = '/images/igallery/original/';
+		$original_path = 'http://qc-intranet-training.stluke.com.ph/images/igallery/original/';
 		$first_digit = $image_id[0];
 		$first_digit_range = $first_digit+1;
 
@@ -279,6 +334,17 @@ class WebService extends REST_Controller
 
 		$album_path = $original_path.$album_range.$filename;
 		return stripslashes($album_path);
+	}
+
+	function registerDevice_post()
+	{
+		unset($_POST['submit']);
+		$data = $_POST;
+		$data['date_created'] = date('Y-m-d');
+		$data['date_updated'] = date('Y-m-d H:i:s');
+
+		$result['result'] = $this->webservice_model->registerDevice($data);
+		$this->response($result);
 	}
 }
 ?>

@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = '';
-$db['default']['database'] = 'intranetqc';
+$db['default']['hostname'] = '192.168.105.31';
+$db['default']['username'] = 'rizisadim';
+$db['default']['password'] = 'rizisadim';
+$db['default']['database'] = 'thesource_qc';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

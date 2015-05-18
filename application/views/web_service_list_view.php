@@ -10,16 +10,28 @@ echo '<dl>
 		<dd>-"/webservice/qpsSubCategories/+$id"</dd>
 		<dt><a href="/webservice/qpsArticle/">Article</a></dt>
 		<dd>-"/webservice/qpsArticle/+$id"</dd>
-		<dt><a href="/webservice/qpsContactUs/336">Contact Us</a></dt>
-		<dd>-"/webservice/qpsContactUs/336"</dd>
-		<dt><a href="/webservice/qpsDownloadableMaterials/106">Downloadable Materials</a></dt>
-		<dd>-"/webservice/qpsDownloadableMaterials/106"</dd>
+		<dt><a href="/webservice/qpsContactUs/">Contact Us</a></dt>
+		<dd>-"/webservice/qpsContactUs/"</dd>
+		<dt><a href="/webservice/qpsDownloadableMaterials/">Downloadable Materials</a></dt>
+		<dd>-"/webservice/qpsDownloadableMaterials/"</dd>
 		<dt><a href="/webservice/qpsTips">Tips</a></dt>
 		<dd>-"/webservice/qpsTips/"</dd>
 		<dt><a href="/webservice/qpsExperience">Experience</a></dt>
 		<dd>-"/webservice/qpsExperience/"</dd>
-		<dt><a href="/webservice/qpsGalleryList/19">Gallery</a></dt>
-		<dd>-"/webservice/qpsGalleryList/19"</dd>
+		<dt><a href="/webservice/qpsGalleryList/">Gallery</a></dt>
+		<dd>-"/webservice/qpsGalleryList/"</dd>
+		<dt><a href="/webservice/registerDevice/">Register Device</a></dt>
+		<dd>-"/webservice/registerDevice/"</dd>
+		<p>REQUIRED POST VARIABLE - please follow the format</p>
+		<ol>
+		  <li>app_name</li>
+		  <li>app_version</li>
+		  <li>device_token</li>
+		  <li>device_name</li>
+		  <li>device_model</li>
+		  <li>device_os</li>
+		  <li>device_version</li>
+		</ol>
 	</dl>';
 
 	// FOR MOBILE
